@@ -26,6 +26,12 @@ export function useLogin() {
         // El backend retorna flag: 'success' cuando es exitoso
         if (response.flag === 'success' && response.message?.login?.token) {
             localStorage.setItem('token', response.message.login.token)
+            
+            // Guardar los datos del estudiante si están disponibles
+            if (response.data) {
+                localStorage.setItem('estudiante', JSON.stringify(response.data))
+            }
+            
             router.push('/inicio')
         } else {
             setError('Credenciales incorrectas. Intenta de nuevo.')

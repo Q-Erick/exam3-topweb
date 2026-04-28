@@ -23,9 +23,15 @@ export function getGradeBg(grade: string | null): string {
 }
 
 // Iniciales del nombre
-export function getInitials(name: string): string {
+// Iniciales del nombre
+export function getInitials(name: string | null | undefined): string {
+    // Si el nombre no existe, devolvemos un string vacío o un placeholder
+    if (!name || typeof name !== 'string') return '??'
+
     return name
-        .split(' ')
+        .trim() // Eliminamos espacios extra al inicio o final
+        .split(/\s+/) // Dividimos por cualquier espacio en blanco
+        .filter(Boolean) // Eliminamos entradas vacías si hay doble espacio
         .slice(0, 2)
         .map((n) => n[0])
         .join('')
