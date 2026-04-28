@@ -22,24 +22,24 @@ export function Input({
     const isPassword = type === 'password'
 
     return (
-        <div className="flex flex-col gap-1.5">
+        <div className="flex flex-col gap-2">
         {label && (
-            <label className="text-sm font-medium text-[#0F172A]">{label}</label>
+            <label className="text-sm font-semibold text-[#0F172A]">{label}</label>
         )}
         <div className="relative">
             {icon && (
-            <div className="absolute left-3 top-1/2 -translate-y-1/2 text-[#64748B]">
+            <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[#64748B]">
                 {icon}
             </div>
             )}
             <input
             type={isPassword ? (showPassword ? 'text' : 'password') : type}
             className={cn(
-                'w-full rounded-xl border border-[#E2E8F0] bg-white px-4 py-2.5 text-sm text-[#0F172A] outline-none transition-all',
-                'placeholder:text-[#94A3B8]',
+                'w-full rounded-xl border border-[#E2E8F0] bg-white px-5 py-3.5 text-base text-[#0F172A] outline-none transition-all',
+                'placeholder:text-[#94A3B8] placeholder:text-sm',
                 'focus:border-[#3B82F6] focus:ring-2 focus:ring-[#3B82F6]/20',
                 error && 'border-red-400 focus:border-red-400 focus:ring-red-400/20',
-                icon && 'pl-10',
+                icon && 'pl-14',
                 isPassword && 'pr-10',
                 className
             )}
