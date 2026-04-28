@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portal Estudiantil - TecNM Celaya
 
-## Getting Started
+Aplicación web para consultar información académica del sistema SII ITC.
+Desarrollada con Next.js, TypeScript y Tailwind CSS.
 
-First, run the development server:
+## Tecnologías
 
-```bash
+- Next.js (App Router)
+- TypeScript
+- Tailwind CSS
+- Lucide React (iconos)
+
+## Requisitos
+
+- Node.js 18 o superior
+- npm
+
+## Instalación
+
+1. Clonar el repositorio
+
+git clone <url-del-repo>
+cd exam3-topweb
+
+2. Instalar dependencias
+
+npm install
+
+3. Iniciar el servidor de desarrollo
+
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Abrir en el navegador
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+http://localhost:3000
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Estructura del proyecto
 
-## Learn More
+src/
+├── app/                        Rutas y páginas (Next.js App Router)
+│   ├── (auth)/login/           Página de inicio de sesión
+│   └── (dashboard)/            Páginas protegidas con sidebar
+│       ├── inicio/             Dashboard principal
+│       ├── calificaciones/     Calificaciones del semestre
+│       ├── kardex/             Historial académico
+│       └── horarios/           Horario del semestre
+│
+├── features/                   Lógica por funcionalidad
+│   ├── auth/                   Login y autenticación
+│   ├── estudiante/             Datos del perfil
+│   ├── calificaciones/         Calificaciones
+│   ├── kardex/                 Kardex
+│   └── horarios/               Horarios
+│
+└── shared/                     Código reutilizable
+    ├── components/ui/          Button, Input, Card, Badge, Spinner, Avatar
+    ├── components/layout/      Sidebar, TopBar
+    ├── hooks/                  useAuth (protección de rutas)
+    ├── lib/                    api.ts (cliente HTTP), utils.ts
+    └── types/                  Tipos base de la API
 
-To learn more about Next.js, take a look at the following resources:
+## API
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Base URL: https://sii.celaya.tecnm.mx/api
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+El token JWT se obtiene en /api/login y se guarda en localStorage.
+Todos los endpoints protegidos lo usan automáticamente via shared/lib/api.ts.
 
-## Deploy on Vercel
+## Como agregar una nueva sección
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Crear la carpeta en src/features/tu-seccion/
+2. Agregar componentes en features/tu-seccion/components/
+3. Agregar el hook en features/tu-seccion/hooks/
+4. Agregar los tipos en features/tu-seccion/types/
+5. Crear la página en src/app/(dashboard)/tu-seccion/page.tsx
+6. Agregar el enlace en src/shared/components/layout/Sidebar.tsx
