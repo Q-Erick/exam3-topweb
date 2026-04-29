@@ -10,6 +10,7 @@ const navItems = [
     { label: 'Calificaciones', href: '/calificaciones', icon: Star },
     { label: 'Historial Académico', href: '/kardex', icon: BookOpen },
     { label: 'Horario del Semestre', href: '/horarios', icon: Calendar },
+    { label: 'Tramitar Cita', href: '/citas', icon: Calendar }
 ]
 
 export function Sidebar() {

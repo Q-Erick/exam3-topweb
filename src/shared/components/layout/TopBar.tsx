@@ -8,45 +8,26 @@ export function TopBar() {
     const { estudiante } = useEstudiante()
 
     return (
-        <header style={{ height: '64px', backgroundColor: '#FFFFFF', borderBottom: '1px solid #E2E8F0', display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingLeft: '24px', paddingRight: '24px' }}>
-        {/* Buscador */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#F1F5F9', borderRadius: '12px', paddingLeft: '16px', paddingRight: '16px', paddingTop: '8px', paddingBottom: '8px', width: '288px' }}>
-            <input
-            type="text"
-            placeholder="Buscar cursos, recursos..."
-            style={{
-                backgroundColor: 'transparent',
-                fontSize: '14px',
-                color: '#64748B',
-                outline: 'none',
-                width: '100%',
-                border: 'none'
-            }}
-            />
-        </div>
-
-        {/* Acciones */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <button style={{ padding: '8px', borderRadius: '12px', backgroundColor: 'transparent', border: 'none', color: '#64748B', cursor: 'pointer', transition: 'background-color 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F1F5F9'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            >
-            <Bell size={18} />
-            </button>
-            <button style={{ padding: '8px', borderRadius: '12px', backgroundColor: 'transparent', border: 'none', color: '#64748B', cursor: 'pointer', transition: 'background-color 0.2s' }}
-            onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F1F5F9'}
-            onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
-            >
-            <Settings size={18} />
-            </button>
-            {estudiante && (
-            <Avatar
-                name={estudiante.persona}
-                foto={estudiante.foto}
-                size="sm"
-            />
-            )}
-        </div>
+        <header className="h-[73px] bg-white border-b border-slate-200 flex items-center justify-end px-8">
+            
+            {/* Acciones - aumenté un poco el gap de 3 a 4 para que respiren entre ellos */}
+            <div className="flex items-center gap-4">
+                <button className="p-2 rounded-xl text-slate-500 bg-transparent border-none cursor-pointer hover:bg-slate-100 transition-colors duration-200">
+                    <Bell size={18} />
+                </button>
+                
+                <button className="p-2 rounded-xl text-slate-500 bg-transparent border-none cursor-pointer hover:bg-slate-100 transition-colors duration-200">
+                    <Settings size={18} />
+                </button>
+                
+                {estudiante && (
+                    <Avatar
+                        name={estudiante.persona}
+                        foto={estudiante.foto}
+                        size="sm"
+                    />
+                )}
+            </div>
         </header>
     )
 }
