@@ -50,3 +50,446 @@ body {
 html, body {
   height: 100%;
 }
+
+.dashboard-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* <-- Modifica este valor para separar más/menos las secciones grandes */
+}
+
+/* Espaciado del Header */
+.dashboard-header {
+  padding: 12px; /* Relleno interno de la tarjeta morada/azul */
+}
+
+.dashboard-header-content {
+  gap: 32px; /* Separación entre la foto, la info y el cuadrito del promedio */
+}
+
+.dashboard-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* Separación entre correo, num. control y semestre */
+}
+
+.dashboard-promedio-box {
+  padding: 14px; /* Relleno del cuadro de cristal */
+  gap: 8px; /* Separación entre el promedio y el icono */
+}
+
+/* Grids: controlan la separación entre tarjetas */
+.dashboard-stats-grid {
+  gap: 24px; /* <-- Separación entre las tarjetas pequeñas de arriba */
+}
+
+.dashboard-info-grid {
+  gap: 24px; /* <-- Separación entre las tarjetas grandes del medio */
+}
+
+.dashboard-summary-grid {
+  gap: 16px; /* <-- Separación entre los cuadritos del resumen final */
+}
+
+/* Relleno estándar para las tarjetas de información */
+.dashboard-card-padding {
+  padding: 32px; /* <-- Aumenta esto si quieres que las tarjetas blancas se vean más gorditas por dentro */
+}
+
+.dashboard-error-padding {
+  padding: 24px;
+}
+
+/* Espaciados internos de las listas y barras de progreso */
+.dashboard-progress-spacing {
+  display: flex;
+  flex-direction: column;
+  flex: 1; /* Obliga al contenedor a estirarse hasta abajo */
+  justify-content: space-evenly; /* Reparte el espacio vacío de forma pareja */
+  min-height: 180px; /* Altura mínima para que no se peguen */
+}
+.dashboard-list-spacing {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* Separación entre los items de la lista de info académica */
+}
+
+.dashboard-list-item {
+  padding: 16px; /* Relleno de las filas grises */
+}
+
+.dashboard-summary-item {
+  padding: 24px; /* Relleno de los cuadritos blancos del fondo */
+}
+
+/* Relleno específico para que el Badge se dibuje correctamente */
+.dashboard-badge-fix {
+  padding-left: 16px;
+  padding-right: 16px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+
+.citas-wrapper {
+  width: 100%;
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+/* Header */
+.citas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 32px;
+}
+
+.citas-title-container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 12px;
+}
+
+.citas-icon-box {
+  padding: 16px;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-title {
+  font-size: 3rem; /* 48px */
+  font-weight: 900;
+  color: #0f172a;
+  letter-spacing: -0.025em;
+}
+
+.citas-subtitle {
+  color: #64748b;
+  font-size: 1.25rem;
+  margin-left: 88px; /* Para alinear con el texto, saltando el icono */
+}
+
+/* Botón Principal (Degradado) */
+.citas-btn-primary {
+  background: linear-gradient(to right, #2563eb, #4f46e5); /* Degradado azul-índigo */
+  color: white;
+  padding: 12px 24px; /* Muchísimo padding */
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 10px 15px -3px rgba(37, 99, 235, 0.3);
+  transition: all 0.2s;
+  border-radius: 100; 
+}
+
+.citas-btn-primary:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 20px 25px -5px rgba(37, 99, 235, 0.4);
+}
+
+/* Lista de Trámites */
+.citas-list-section {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.citas-list-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.citas-list-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Tarjeta Individual de Cita */
+.citas-card {
+  background-color: white;
+  border: 1px solid #e2e8f0;
+  border-left: 6px solid transparent;
+  padding: 32px; /* Mucho padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-card:hover {
+  border-left-color: #3b82f6;
+  border-top-color: #bfdbfe;
+  border-right-color: #bfdbfe;
+  border-bottom-color: #bfdbfe;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.citas-card-info {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.citas-card-specialty {
+  font-size: 1.25rem;
+  font-weight: 900;
+  color: #0f172a;
+}
+
+.citas-card-dates {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.citas-date-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #f1f5f9;
+  padding: 8px 16px;
+  color: #475569;
+  font-weight: 500;
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-date-text {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+/* Estado de las tarjetas */
+.citas-status-badge {
+  padding: 8px 24px; /* Relleno exagerado */
+  font-weight: bold;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 10 !important; 
+}
+
+.status-pendiente { background-color: #fef3c7; color: #b45309; border: 1px solid #fde68a; }
+.status-aceptada { background-color: #d1fae5; color: #047857; border: 1px solid #a7f3d0; }
+.status-rechazada { background-color: #ffe4e6; color: #be123c; border: 1px solid #fecdd3; }
+
+/* Empty State (Sin citas) */
+.citas-empty-state {
+  padding: 96px 40px;
+  text-align: center;
+  background-color: #f8fafc;
+  border: 2px dashed #cbd5e1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-empty-icon {
+  width: 96px;
+  height: 96px;
+  background-color: white;
+  border: 1px solid #f1f5f9;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-empty-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #334155;
+  margin-bottom: 12px;
+}
+
+.citas-empty-desc {
+  color: #64748b;
+  font-size: 1.125rem;
+  max-width: 400px;
+}
+
+/* =========================================
+   MODAL EMERGENTE
+   ========================================= */
+.citas-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(4px);
+  padding: 16px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.citas-modal-card {
+  background-color: white;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  animation: zoomIn 0.2s ease-out;
+  /* CERO CURVAS */
+  border-radius: 0; 
+}
+
+.citas-modal-header {
+  background: linear-gradient(to right, #2563eb, #4f46e5); /* Degradado */
+  padding: 24px 32px;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.citas-modal-header h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.citas-modal-close {
+  background: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.citas-modal-close:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Formulario dentro del Modal */
+.citas-form {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.citas-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.citas-form-group label {
+  font-size: 0.875rem;
+  font-weight: bold;
+  color: #334155;
+}
+
+.citas-form-group input,
+.citas-form-group select,
+.citas-form-group textarea {
+  width: 100%;
+  padding: 16px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #334155;
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+  border-radius: 10; 
+}
+
+.citas-form-group textarea {
+  height: 120px;
+  resize: none;
+}
+
+.citas-form-group input:focus,
+.citas-form-group select:focus,
+.citas-form-group textarea:focus {
+  background-color: white;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.citas-form-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.citas-btn-cancel {
+  padding: 16px 24px;
+  background-color: #f1f5f9;
+  color: #475569;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  border-radius: 100; 
+}
+
+.citas-btn-cancel:hover {
+  background-color: #e2e8f0;
+}
+
+.citas-btn-submit {
+  flex: 1;
+  background: linear-gradient(to right, #2563eb, #4f46e5); /* Degradado */
+  color: white;
+  padding: 16px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.2);
+  transition: transform 0.2s;
+  border-radius: 100; 
+}
+
+.citas-btn-submit:hover:not(:disabled) {
+  transform: translateY(-2px);
+}
+
+.citas-btn-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Animaciones del Modal */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes zoomIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
