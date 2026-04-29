@@ -9,6 +9,7 @@ Desarrollada con Next.js, TypeScript y Tailwind CSS.
 - TypeScript
 - Tailwind CSS
 - Lucide React (iconos)
+<img width="1913" height="906" alt="image" src="https://github.com/user-attachments/assets/dd762887-e696-49ba-9ea7-1d5aaa900fdd" />
 
 ## Requisitos
 
