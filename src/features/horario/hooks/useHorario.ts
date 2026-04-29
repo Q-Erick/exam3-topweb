@@ -1,61 +1,70 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { api } from '@/shared/lib/api'
-import { ApiResponse } from '@/shared/types/api.types'
 
 export function useHorario() {
-    const [clases, setClases] = useState<any[]>([])
-    const [loading, setLoading] = useState(true)
+  const [clases, setClases] = useState<any[]>([])
+  const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        async function fetchHorario() {
-            try {
-                const response = await api.get<ApiResponse<any>>('/movil/estudiante/horarios')
-                
-                if (response.flag && response.data) {
-                    
-                    // --- EL TRUCO ESTÁ AQUÍ ---
-                    // Buscamos dónde escondió la API la lista real de materias
-                    let arregloMaterias = [];
-                    
-                    if (Array.isArray(response.data) && response.data.length > 0) {
-                        // Si viene envuelto en un array: [{ horario: [...] }] (Como en Calificaciones)
-                        arregloMaterias = response.data[0].horario || response.data;
-                    } else if (response.data.horario) {
-                        // Si viene directo en un objeto: { horario: [...] }
-                        arregloMaterias = response.data.horario;
-                    }
+  useEffect(() => {
+    async function fetchHorario() {
+      try {
+        const response = await api.get<any>('/movil/estudiante/horarios')
 
-                    // Ahora sí procesamos la lista real
-                    if (Array.isArray(arregloMaterias)) {
-                        const materiasProcesadas = arregloMaterias.map((m: any, index: number) => {
-                            const hInicio = parseInt(m.hora_inicio?.toString().split(':')[0]) || 8;
-                            const hFinal = parseInt(m.hora_final?.toString().split(':')[0]) || (hInicio + 1);
-                            const diaNum = parseInt(m.dia);
+        const raw = Array.isArray(response.data)
+          ? (response.data[0]?.horario ?? response.data)
+          : (response.data?.horario ?? response.data?.data ?? [])
 
-                            return {
-                                id: `${m.materia?.clave_materia || index}-${m.dia}-${index}`, 
-                                codigo: m.materia?.clave_materia || m.clave_materia || 'S/C',
-                                nombre: m.materia?.nombre_materia || m.nombre_materia || 'Materia',
-                                profesor: m.docente || m.nombre_empleado || 'Sin asignar',
-                                salon: m.aula || 'S/N',
-                                dia: isNaN(diaNum) ? 1 : diaNum, 
-                                horaInicio: hInicio,
-                                duracion: (hFinal - hInicio) > 0 ? (hFinal - hInicio) : 1,
-                                color: ['blue', 'green', 'purple', 'orange', 'pink'][index % 5]
-                            };
-                        });
-                        setClases(materiasProcesadas);
-                    }
-                }
-            } catch (err) {
-                console.error("Error en useHorario:", err)
-            } finally {
-                setLoading(false)
-            }
-        }
-        fetchHorario()
-    }, [])
+        const sesiones: any[] = []
 
-    return { clases, loading }
+        const diasMap = [
+          { key: 'lunes',     idx: 1 },
+          { key: 'martes',    idx: 2 },
+          { key: 'miercoles', idx: 3 },
+          { key: 'jueves',    idx: 4 },
+          { key: 'viernes',   idx: 5 },
+        ]
+
+        raw.forEach((m: any, idx: number) => {
+          diasMap.forEach(({ key, idx: dIdx }) => {
+            const horario = m[key]
+            const aula = m[`${key}_clave_salon`] ?? 'S/N'
+
+            if (!horario || typeof horario !== 'string') return
+
+            // Regex para extraer horas: soporta "09:00-10:00", "9:00 - 10:00", etc.
+            const match = horario.match(/(\d+):(\d+)\s*[-–]\s*(\d+):(\d+)/)
+            if (!match) return
+
+            const horaInicio = parseInt(match[1])
+            const horaFin    = parseInt(match[3])
+            const duracion   = horaFin - horaInicio || 1
+
+            sesiones.push({
+              id:         `c-${idx}-${dIdx}`,
+              nombre:     m.nombre_materia ?? 'Materia',
+              clave:      m.clave_materia  ?? '',
+              aula:       aula || 'S/N',
+              diaIdx:     dIdx,
+              horaInicio,
+              duracion,
+            })
+          })
+        })
+// Justo antes del setClases(sesiones)
+sesiones.forEach(s => {
+  console.log(`${s.nombre} | Día: ${s.diaIdx} | Hora: ${s.horaInicio} | Duración: ${s.duracion}h | Aula: ${s.aula}`)
+})
+        setClases(sesiones)
+      } catch (err: any) {
+        console.error('Error fetching horario:', err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchHorario()
+  }, [])
+
+  return { clases, loading }
 }
