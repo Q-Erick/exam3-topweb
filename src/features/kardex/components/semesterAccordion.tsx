@@ -1,56 +1,217 @@
-'use client';
+'use client'
 
-export const SemesterAccordion = ({ periodoData }: { periodoData: any }) => {
+import { useState } from 'react'
+import { ChevronDown, ChevronUp } from 'lucide-react'
+import { SemestreAgrupado } from '@/features/kardex/types/kardex.types'
+
+interface SemesterAccordionProps {
+  periodoData: SemestreAgrupado
+}
+
+function getGradeStyle(calificacion: string) {
+  if (calificacion === 'AC') {
+    return { backgroundColor: '#EFF6FF', color: '#1D4ED8' }
+  }
+  const num = parseFloat(calificacion)
+  if (isNaN(num)) return { backgroundColor: '#F1F5F9', color: '#64748B' }
+  if (num >= 90) return { backgroundColor: '#DCFCE7', color: '#15803D' }
+  if (num >= 80) return { backgroundColor: '#F1F5F9', color: '#0F172A' }
+  return { backgroundColor: '#FEF9C3', color: '#A16207' }
+}
+
+export function SemesterAccordion({ periodoData }: SemesterAccordionProps) {
+  const [open, setOpen] = useState(true)
+
   return (
-    <div className="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300">
-      {/* Cabecera del Acordeón */}
-      <div className="p-5 bg-gradient-to-r from-slate-50 to-white border-b border-slate-100 flex justify-between items-center">
-        <div>
-          <h3 className="font-bold text-slate-800 text-lg uppercase tracking-tight">{periodoData.periodo}</h3>
-          <div className="flex gap-3 mt-1">
-            <span className="text-[10px] font-bold text-slate-400 italic">PROMEDIO: 85.2</span>
-            <span className="text-[10px] font-bold text-slate-400 italic">CRÉDITOS: 24</span>
+    <div style={{
+      backgroundColor: '#FFFFFF',
+      border: '1px solid #E2E8F0',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+    }}>
+
+      {/* Header */}
+      <button
+        onClick={() => setOpen(!open)}
+        style={{
+          width: '100%',
+          padding: '20px 24px',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          backgroundColor: '#F8FAFC',
+          borderTop: 'none',
+          borderLeft: 'none',
+          borderRight: 'none',
+          borderBottom: open ? '1px solid #E2E8F0' : 'none',
+          cursor: 'pointer',
+          transition: 'background-color 0.2s',
+        }}
+        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F1F5F9'}
+        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#F8FAFC'}
+      >
+        <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+          {/* Número de semestre */}
+          <div style={{
+            width: '40px',
+            height: '40px',
+            borderRadius: '12px',
+            background: 'linear-gradient(135deg, #3B82F6, #8B5CF6)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: 'white',
+            fontSize: '14px',
+            fontWeight: 700,
+            flexShrink: 0,
+          }}>
+            {periodoData.semestre}
+          </div>
+
+          <div style={{ textAlign: 'left' }}>
+            <h3 style={{
+              fontSize: '16px',
+              fontWeight: 700,
+              color: '#0F172A',
+              margin: 0,
+            }}>
+              Semestre {periodoData.semestre}
+            </h3>
+            <p style={{ fontSize: '12px', color: '#64748B', margin: '2px 0 0 0' }}>
+              Periodo {periodoData.periodo} • {periodoData.materias.length} materias
+            </p>
           </div>
         </div>
-        <span className="text-[10px] font-black px-4 py-1.5 bg-emerald-50 text-emerald-600 rounded-full border border-emerald-100 shadow-sm">
-          ✓ COMPLETADO
-        </span>
-      </div>
 
-      {/* Tabla de Materias */}
-      <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-slate-50/30 text-slate-400 uppercase text-[9px] font-black tracking-widest">
-            <tr>
-              <th className="px-8 py-4">Asignatura</th>
-              <th className="px-8 py-4 text-center">Créditos</th>
-              <th className="px-8 py-4 text-right">Calificación Final</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-slate-50 text-slate-700">
-            {periodoData.materias.map((m: any, index: number) => (
-              <tr key={index} className="hover:bg-blue-50/20 transition-colors group">
-                <td className="px-8 py-5">
-                  <p className="font-bold text-slate-800 group-hover:text-blue-700 transition-colors">
-                    {m.nombre_materia}
-                  </p>
-                  <p className="text-[10px] text-slate-400 font-mono mt-0.5">{m.clave_materia || 'TEC-1234'}</p>
-                </td>
-                <td className="px-8 py-5 text-center font-medium text-slate-500">
-                  {m.creditos}
-                </td>
-                <td className="px-8 py-5 text-right">
-                  <span className={`inline-block px-4 py-1.5 rounded-xl font-black text-sm min-w-[50px] text-center
-                    ${m.calificacion >= 90 ? 'bg-blue-50 text-blue-700' : 
-                      m.calificacion >= 80 ? 'bg-slate-100 text-slate-800' : 'bg-orange-50 text-orange-700'}`}>
-                    {m.calificacion}
-                  </span>
-                </td>
+        {/* Stats + chevron */}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <div style={{
+            padding: '6px 14px',
+            backgroundColor: '#EFF6FF',
+            borderRadius: '999px',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: '#1D4ED8',
+          }}>
+            Promedio: {periodoData.promedio}
+          </div>
+          <div style={{
+            padding: '6px 14px',
+            backgroundColor: '#F5F3FF',
+            borderRadius: '999px',
+            fontSize: '12px',
+            fontWeight: 600,
+            color: '#6D28D9',
+          }}>
+            {periodoData.creditos} créditos
+          </div>
+          {open
+            ? <ChevronUp size={18} color="#64748B" />
+            : <ChevronDown size={18} color="#64748B" />
+          }
+        </div>
+      </button>
+
+      {/* Tabla */}
+      {open && (
+        <div style={{ overflowX: 'auto' }}>
+          <table style={{ width: '100%', borderCollapse: 'collapse' }}>
+            <thead>
+              <tr style={{ backgroundColor: '#F8FAFC' }}>
+                <th style={{
+                  padding: '12px 24px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#94A3B8',
+                  textAlign: 'left',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}>
+                  Asignatura
+                </th>
+                <th style={{
+                  padding: '12px 24px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#94A3B8',
+                  textAlign: 'center',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}>
+                  Créditos
+                </th>
+                <th style={{
+                  padding: '12px 24px',
+                  fontSize: '11px',
+                  fontWeight: 700,
+                  color: '#94A3B8',
+                  textAlign: 'right',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.05em',
+                }}>
+                  Calificación
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {periodoData.materias.map((m, index) => (
+                <tr
+                  key={index}
+                  style={{
+                    borderTop: '1px solid #F1F5F9',
+                    transition: 'background-color 0.15s',
+                  }}
+                  onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#F8FAFC'}
+                  onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
+                >
+                  <td style={{ padding: '16px 24px' }}>
+                    <p style={{
+                      fontSize: '14px',
+                      fontWeight: 600,
+                      color: '#0F172A',
+                      margin: 0,
+                    }}>
+                      {m.nombre_materia}
+                    </p>
+                    <p style={{
+                      fontSize: '11px',
+                      color: '#94A3B8',
+                      fontFamily: 'monospace',
+                      margin: '2px 0 0 0',
+                    }}>
+                      {m.clave_materia}
+                    </p>
+                  </td>
+                  <td style={{ padding: '16px 24px', textAlign: 'center' }}>
+                    <span style={{
+                      fontSize: '14px',
+                      fontWeight: 500,
+                      color: '#64748B',
+                    }}>
+                      {m.creditos}
+                    </span>
+                  </td>
+                  <td style={{ padding: '16px 24px', textAlign: 'right' }}>
+                    <span style={{
+                      ...getGradeStyle(m.calificacion),
+                      display: 'inline-block',
+                      padding: '4px 14px',
+                      borderRadius: '8px',
+                      fontSize: '14px',
+                      fontWeight: 700,
+                      minWidth: '52px',
+                      textAlign: 'center',
+                    }}>
+                      {m.calificacion}
+                    </span>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
-  );
-};
+  )
+}

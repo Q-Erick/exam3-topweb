@@ -1,40 +1,134 @@
-'use client';
-import { useKardex } from '@/features/kardex/hooks/useKardex';
-import { SemesterAccordion } from '@/features/kardex/components/semesterAccordion';
+'use client'
+
+import { useKardex } from '@/features/kardex/hooks/useKardex'
+import { SemesterAccordion } from '@/features/kardex/components/semesterAccordion'
+import { Spinner } from '@/shared/components/ui/Spinner'
+import { ErrorMessage } from '@/shared/components/feedback/ErrorMessage'
 
 export default function KardexPage() {
-  const { historial, loading } = useKardex();
+  const {
+    historial,
+    porcentajeAvance,
+    promedioGeneral,
+    creditosTotales,
+    loading,
+    error,
+  } = useKardex()
 
-  if (loading) return <div className="p-20 text-center animate-pulse text-slate-400 font-medium">Cargando Historial Académico...</div>;
+  if (loading) {
+    return (
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
+        <Spinner size="lg" />
+      </div>
+    )
+  }
+
+  if (error) {
+    return (
+      <div style={{ maxWidth: '448px', margin: '48px auto' }}>
+        <ErrorMessage message={error} />
+      </div>
+    )
+  }
 
   return (
-    <div className="p-8 max-w-6xl mx-auto bg-slate-50/50 min-h-screen">
-      {/* Encabezado Principal */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+
+      {/* Header */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px' }}>
         <div>
-          <h1 className="text-4xl font-extrabold text-slate-900 tracking-tight">Historial Académico</h1>
-          <p className="text-slate-500 mt-1 font-medium italic">Enero - Junio 2026 • Semestre 10</p>
+          <h1 style={{ fontSize: '24px', fontWeight: 700, color: '#0F172A', margin: 0 }}>
+            Historial Académico
+          </h1>
+          <p style={{ fontSize: '14px', color: '#64748B', margin: '4px 0 0 0' }}>
+            Registro completo de materias cursadas
+          </p>
         </div>
-        
-        {/* Tarjetas de Resumen Rápido */}
-        <div className="flex gap-4">
-          <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Promedio General</p>
-            <p className="text-2xl font-black text-blue-600">83.7</p>
+
+        {/* Stats */}
+        <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+          <div style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E2E8F0',
+            borderRadius: '16px',
+            padding: '12px 20px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          }}>
+            <p style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              Promedio General
+            </p>
+            <p style={{ fontSize: '24px', fontWeight: 800, color: '#3B82F6', margin: '2px 0 0 0' }}>
+              {promedioGeneral}
+            </p>
           </div>
-          <div className="bg-white px-6 py-3 rounded-2xl shadow-sm border border-slate-200">
-            <p className="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Créditos Totales</p>
-            <p className="text-2xl font-black text-slate-800">210 / 260</p>
+
+          <div style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E2E8F0',
+            borderRadius: '16px',
+            padding: '12px 20px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          }}>
+            <p style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              Créditos Acumulados
+            </p>
+            <p style={{ fontSize: '24px', fontWeight: 800, color: '#0F172A', margin: '2px 0 0 0' }}>
+              {creditosTotales}
+            </p>
+          </div>
+
+          <div style={{
+            backgroundColor: '#FFFFFF',
+            border: '1px solid #E2E8F0',
+            borderRadius: '16px',
+            padding: '12px 20px',
+            boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+          }}>
+            <p style={{ fontSize: '11px', color: '#94A3B8', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em', margin: 0 }}>
+              Avance de Carrera
+            </p>
+            <p style={{ fontSize: '24px', fontWeight: 800, color: '#10B981', margin: '2px 0 0 0' }}>
+              {porcentajeAvance}%
+            </p>
           </div>
         </div>
       </div>
 
-      {/* Lista de Semestres */}
-      <div className="grid gap-6">
-        {historial.map((p, i) => (
-          <SemesterAccordion key={i} periodoData={p} />
+      {/* Barra de avance general */}
+      <div style={{
+        backgroundColor: '#FFFFFF',
+        border: '1px solid #E2E8F0',
+        borderRadius: '16px',
+        padding: '16px 20px',
+        boxShadow: '0 1px 3px rgba(0,0,0,0.05)',
+      }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '8px' }}>
+          <span style={{ fontSize: '13px', fontWeight: 600, color: '#0F172A' }}>Progreso de carrera</span>
+          <span style={{ fontSize: '13px', fontWeight: 700, color: '#3B82F6' }}>{porcentajeAvance}%</span>
+        </div>
+        <div style={{
+          width: '100%',
+          height: '8px',
+          backgroundColor: '#F1F5F9',
+          borderRadius: '999px',
+          overflow: 'hidden',
+        }}>
+          <div style={{
+            width: `${porcentajeAvance}%`,
+            height: '100%',
+            background: 'linear-gradient(to right, #3B82F6, #8B5CF6)',
+            borderRadius: '999px',
+            transition: 'width 0.5s ease',
+          }} />
+        </div>
+      </div>
+
+      {/* Lista de semestres */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+        {historial.map((s) => (
+          <SemesterAccordion key={s.semestre} periodoData={s} />
         ))}
       </div>
     </div>
-  );
+  )
 }
