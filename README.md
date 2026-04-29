@@ -9,6 +9,7 @@ Desarrollada con Next.js, TypeScript y Tailwind CSS.
 - TypeScript
 - Tailwind CSS
 - Lucide React (iconos)
+<img width="1913" height="906" alt="image" src="https://github.com/user-attachments/assets/dd762887-e696-49ba-9ea7-1d5aaa900fdd" />
 
 ## Requisitos
 
@@ -74,3 +75,8 @@ Todos los endpoints protegidos lo usan automáticamente via shared/lib/api.ts.
 4. Agregar los tipos en features/tu-seccion/types/
 5. Crear la página en src/app/(dashboard)/tu-seccion/page.tsx
 6. Agregar el enlace en src/shared/components/layout/Sidebar.tsx
+
+<img width="1919" height="900" alt="image" src="https://github.com/user-attachments/assets/0a7ba028-37fa-47a3-bf4f-4a18b78f57e3" />
+<img width="1918" height="910" alt="image" src="https://github.com/user-attachments/assets/f190aacd-12f5-49ae-a2a5-659cecd688e2" />
+<img width="1919" height="903" alt="image" src="https://github.com/user-attachments/assets/8f21bb0c-cc0b-41b5-9488-f87477466908" />
+
