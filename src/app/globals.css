@@ -690,3 +690,117 @@ html, body {
   font-weight: bold;
   padding: 10px;
 }
+
+/* Sidebar base (PC) */
+.sidebar {
+  width: 256px;
+  min-height: 100vh;
+  background: white;
+  border-right: 1px solid #E2E8F0;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  z-index: 100;
+}
+
+.sidebar-header {
+  padding: 20px 24px;
+  border-bottom: 1px solid #E2E8F0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  color: #0F172A;
+  font-size: 18px;
+}
+
+.sidebar-logo img { width: 32px; height: 32px; }
+
+.sidebar-nav {
+  flex: 1;
+  padding: 16px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Items del menú */
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748B;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nav-item.active {
+  background-color: rgba(59, 130, 246, 0.1);
+  color: #3B82F6;
+}
+
+.nav-item:hover:not(.active) {
+  background-color: #F1F5F9;
+  color: #0F172A;
+}
+
+.sidebar-footer {
+  padding: 16px 12px;
+  border-top: 1px solid #E2E8F0;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #64748B;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  background-color: #FEE2E2;
+  color: #EF4444;
+}
+
+/* --- MÓVIL --- */
+.mobile-close-btn { display: none; }
+
+@media (max-width: 768px) {
+  .sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    transform: translateX(-100%); /* Escondido */
+  }
+
+  .sidebar.open {
+    transform: translateX(0); /* Entra deslizándose */
+    box-shadow: 10px 0 50px rgba(0,0,0,0.1);
+  }
+
+  .mobile-close-btn {
+    display: flex;
+    background: transparent;
+    border: none;
+    color: #64748B;
+    cursor: pointer;
+  }
+}

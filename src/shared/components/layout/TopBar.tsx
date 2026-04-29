@@ -2,13 +2,18 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { usePathname } from 'next/navigation'
-import { Bell, Settings, Info, X } from 'lucide-react'
+import { Bell, Settings, Info, X, Menu } from 'lucide-react'
 import { Avatar } from '@/shared/components/ui/Avatar'
 import { useEstudiante } from '@/features/estudiante/hooks/useEstudiante'
 import { supabase } from '@/shared/lib/supabase'
 import Link from 'next/link'
 
-export function TopBar() {
+// 1. Definimos la interfaz para que TypeScript acepte la prop del Layout
+interface TopBarProps {
+    onMenuClick?: () => void;
+}
+
+export function TopBar({ onMenuClick }: TopBarProps) {
     const { estudiante } = useEstudiante()
     const pathname = usePathname()
     
@@ -19,7 +24,7 @@ export function TopBar() {
     const notiRef = useRef<HTMLDivElement>(null)
     const esAdmin = estudiante?.email === 'l22030574@celaya.tecnm.mx'
 
-    // 1. CARGA DE NOTIFICACIONES LIMITADA A 5
+    // 2. CARGA DE NOTIFICACIONES LIMITADA A 5
     const fetchNotis = async () => {
         if (!estudiante?.numero_control) return
 
@@ -29,7 +34,7 @@ export function TopBar() {
             .eq('numero_control', estudiante.numero_control)
             .neq('status', 'Pendiente') 
             .order('created_at', { ascending: false })
-            .limit(5) // <-- 🛡️ LÍMITE ESTRICTO DESDE LA BASE DE DATOS
+            .limit(5)
         
         if (data) {
             setNotificaciones(data)
@@ -46,10 +51,12 @@ export function TopBar() {
         }
     }
 
+    // Actualizar al cambiar de página o estudiante
     useEffect(() => {
         fetchNotis()
     }, [estudiante, pathname])
 
+    // Función para abrir notis y marcar como "visto"
     const handleToggleNotis = () => {
         const nuevaCarga = !showNotis
         setShowNotis(nuevaCarga)
@@ -60,7 +67,7 @@ export function TopBar() {
         }
     }
 
-    // Cerrar al hacer clic fuera
+    // Cerrar dropdown al hacer clic fuera
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
             if (notiRef.current && !notiRef.current.contains(event.target as Node)) {
@@ -72,7 +79,19 @@ export function TopBar() {
     }, [])
 
     return (
-        <header className="h-[73px] bg-white border-b border-slate-200 flex items-center justify-end px-8 relative">
+        <header className="h-[73px] bg-white border-b border-slate-200 flex items-center justify-between px-8 relative">
+            
+            {/* --- IZQUIERDA: BOTÓN MENÚ MÓVIL --- */}
+            <div className="flex items-center">
+                <button 
+                    onClick={onMenuClick}
+                    className="p-2 rounded-xl text-slate-500 bg-transparent border-none cursor-pointer hover:bg-slate-100 transition-colors lg:hidden"
+                >
+                    <Menu size={24} />
+                </button>
+            </div>
+
+            {/* --- DERECHA: NOTIFICACIONES Y PERFIL --- */}
             <div className="flex items-center gap-4">
                 
                 <div className="relative" ref={notiRef}>
@@ -95,7 +114,6 @@ export function TopBar() {
                                 </button>
                             </div>
 
-                            {/* Contenedor con altura controlada para exactamente 5 o menos */}
                             <div className="max-h-[350px] overflow-y-auto p-2 space-y-2">
                                 {notificaciones.length === 0 ? (
                                     <div className="py-10 text-center text-slate-400 text-[11px] font-bold italic uppercase">
@@ -133,7 +151,6 @@ export function TopBar() {
                     )}
                 </div>
                 
-                {/* ... resto del TopBar (Settings y Avatar) ... */}
                 {esAdmin && (
                     <Link href="/admin-citas">
                         <button className="p-2 rounded-xl text-slate-500 bg-transparent border-none cursor-pointer hover:bg-slate-100 transition-colors duration-200" title="Panel de Administración">
