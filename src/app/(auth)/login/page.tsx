@@ -33,7 +33,7 @@ export default function LoginPage() {
         </div>
 
         {/* Panel derecho — formulario */}
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '56px', paddingRight: '56px', paddingTop: '48px', paddingBottom: '48px' }}>
+        <div className="login-form" style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', paddingLeft: '56px', paddingRight: '56px', paddingTop: '48px', paddingBottom: '48px' }}>
           <div style={{ marginBottom: '40px' }}>
             <h2 style={{ fontSize: '36px', fontWeight: 700, color: '#0F172A', margin: 0, marginBottom: '12px' }}>Bienvenido de nuevo</h2>
             <p style={{ color: '#64748B', fontSize: '16px', marginTop: '12px', margin: 0 }}>
