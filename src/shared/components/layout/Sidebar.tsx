@@ -9,6 +9,7 @@ import { useAuth } from '@/shared/hooks/useAuth'
 interface SidebarProps {
     isOpen?: boolean;
     onClose?: () => void;
+    isBlurred?: boolean
 }
 
 const navItems = [
@@ -19,13 +20,13 @@ const navItems = [
     { label: 'Tramitar Cita', href: '/citas', icon: Calendar }
 ]
 
-export function Sidebar({ isOpen, onClose }: SidebarProps) {
+export function Sidebar({ isOpen, onClose, isBlurred }: SidebarProps) {
     const pathname = usePathname()
     const { logout } = useAuth()
 
     return (
         /* Usamos la clase 'sidebar' definida en globals.css */
-        <aside className={`sidebar ${isOpen ? 'open' : ''}`}>
+        <aside className={`sidebar ${isOpen ? 'open' : ''} ${isBlurred ? 'sidebar-blurred' : ''}`}>
             
             {/* Logo y Botón de cierre móvil */}
             <div className="sidebar-header">
